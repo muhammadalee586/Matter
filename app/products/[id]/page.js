@@ -1,6 +1,9 @@
 import prisma from "@/lib/db";
 import { notFound } from "next/navigation";
+import Link from "next/link";
 import AddToCartButton from "@/components/product/AddToCartButton";
+import DeleteProductButton from "@/components/product/DeleteProductButton";
+
 
 export default async function ProductDetailPage({ params }) {
     const { id } = await params;
@@ -33,6 +36,15 @@ export default async function ProductDetailPage({ params }) {
                     {product.stock > 0 ? `${product.stock} in stock` : "Out of stock"}
                 </p>
                 <AddToCartButton product={product} />
+                <div className="mt-4">
+                    <DeleteProductButton productId={product.id} />
+                </div>
+                <Link
+                    href={`/admin/products/${product.id}/edit`}
+                    className="text-sm text-neutral-500 hover:text-black underline"
+                >
+                    Edit Product
+                </Link>
             </div>
         </main>
     );
