@@ -16,6 +16,11 @@ export default async function ProductDetailPage({ params }) {
         notFound();
     }
 
+    const serializedProduct = {
+        ...product,
+        price: Number(product.price),
+    };
+
     return (
         <main className="max-w-4xl mx-auto px-6 py-12 grid grid-cols-1 md:grid-cols-2 gap-10">
             <div className="aspect-square bg-neutral-100 rounded-lg overflow-hidden">
@@ -35,7 +40,7 @@ export default async function ProductDetailPage({ params }) {
                 <p className="text-sm text-neutral-500 mb-6">
                     {product.stock > 0 ? `${product.stock} in stock` : "Out of stock"}
                 </p>
-                <AddToCartButton product={product} />
+                <AddToCartButton product={serializedProduct} />
                 <div className="mt-4">
                     <DeleteProductButton productId={product.id} />
                 </div>
