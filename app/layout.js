@@ -2,6 +2,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { CartProvider } from "@/context/CartContext";
 import Navbar from "@/components/layout/Navbar";
+import SessionWrapper from "@/components/layout/SessionWrapper";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -25,10 +26,13 @@ export default function RootLayout({ children }) {
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">
-        <CartProvider>
-          <Navbar />
-          {children}
-        </CartProvider>
+        <SessionWrapper>
+          <CartProvider>
+            <Navbar />
+            {children}
+          </CartProvider>
+        </SessionWrapper>
+
       </body>
     </html>
   );
