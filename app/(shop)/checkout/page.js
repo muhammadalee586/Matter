@@ -5,9 +5,12 @@ import { useCart } from "@/context/CartContext";
 import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
 import Link from "next/link";
+import { useEffect } from "react";
+import StripeWrapper from "@/components/checkout/StripeWrapper";
+import PaymentForm from "@/components/checkout/PaymentForm";
 
 export default function CheckoutPage() {
-    const { cart, cartTotal } = useCart();
+    const { cart, cartTotal, clearCart } = useCart();
     const { data: session, status } = useSession();
     const router = useRouter();
 
@@ -19,6 +22,38 @@ export default function CheckoutPage() {
         postalCode: "",
         phone: "",
     });
+    const [clientSecret, setClientSecret] = useState("");
+
+
+    useEffect(() => {
+        if (step === 2 && cartTotal > 0) {
+            fetch("/api/checkout", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ amount: cartTotal }),
+            })
+                .then((res) => res.json())
+                .then((data) => setClientSecret(data.clientSecret));
+        }
+    }, [step, cartTotal]);
+
+    async function handlePaymentSuccess(paymentIntent) {
+        try {
+            const res = await fetch("/api/orders", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ cart, total: cartTotal }),
+            });
+
+            if (!res.ok) throw new Error("Failed to save order");
+
+            const order = await res.json();
+            clearCart();
+            router.push(`/account/orders/${order.id}`);
+        } catch (err) {
+            alert(err.message);
+        }
+    }
 
     function handleChange(e) {
         const { name, value } = e.target;
@@ -166,16 +201,18 @@ export default function CheckoutPage() {
                     <div className="flex gap-3">
                         <button
                             onClick={() => setStep(1)}
-                            className="flex-1 border border-neutral-300 px-6 py-3 rounded-lg text-sm font-medium hover:bg-neutral-50 transition-colors"
+                            className="text-sm text-neutral-500 underline mb-4"
                         >
-                            Back
+                            ← Back to shipping
                         </button>
-                        <button
-                            onClick={() => alert("Stripe payment goes here — Step 11")}
-                            className="flex-1 bg-black text-white px-6 py-3 rounded-lg text-sm font-medium hover:bg-neutral-800 transition-colors"
-                        >
-                            Proceed to Payment
-                        </button>
+
+                        {clientSecret ? (
+                            <StripeWrapper clientSecret={clientSecret}>
+                                <PaymentForm onSuccess={handlePaymentSuccess} />
+                            </StripeWrapper>
+                        ) : (
+                            <p className="text-sm text-neutral-500">Loading payment form...</p>
+                        )}
                     </div>
                 </div>
             )}

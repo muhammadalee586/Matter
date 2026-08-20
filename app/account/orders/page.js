@@ -1,0 +1,53 @@
+import prisma from "@/lib/db";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/lib/auth";
+import { redirect } from "next/navigation";
+import Link from "next/link";
+
+export default async function OrderHistoryPage() {
+    const session = await getServerSession(authOptions);
+
+    if (!session) {
+        redirect("/login");
+    }
+
+    const orders = await prisma.order.findMany({
+        where: { userId: session.user.id },
+        orderBy: { createdAt: "desc" },
+    });
+
+    return (
+        <main className="max-w-2xl mx-auto px-6 py-12">
+            <h1 className="text-2xl font-semibold mb-6">Your Orders</h1>
+
+            {orders.length === 0 ? (
+                <p className="text-neutral-500">
+                    No orders yet.{" "}
+                    <Link href="/" className="underline">
+                        Go shopping
+                    </Link>
+                </p>
+            ) : (
+                <div className="space-y-3">
+                    {orders.map((order) => (
+                        <Link
+                            key={order.id}
+                            href={`/account/orders/${order.id}`}
+                            className="flex justify-between items-center border border-neutral-200 rounded-lg px-4 py-3 hover:bg-neutral-50"
+                        >
+                            <div>
+                                <p className="text-sm font-medium">Order #{order.id}</p>
+                                <p className="text-xs text-neutral-500">
+                                    {new Date(order.createdAt).toLocaleDateString()} — {order.status}
+                                </p>
+                            </div>
+                            <p className="text-sm font-semibold">
+                                ${Number(order.total).toFixed(2)}
+                            </p>
+                        </Link>
+                    ))}
+                </div>
+            )}
+        </main>
+    );
+}
