@@ -1,5 +1,9 @@
 import { NextResponse } from "next/server";
 import prisma from "@/lib/db";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/lib/auth";
+
+
 
 export async function GET(request, { params }) {
     try {
@@ -25,6 +29,11 @@ export async function GET(request, { params }) {
 
 export async function PUT(request, { params }) {
     try {
+        const session = await getServerSession(authOptions);
+        if (!session || session.user.role !== "admin") {
+            return NextResponse.json({ error: "Not authorized" }, { status: 403 });
+        }
+
         const { id } = await params;
         const body = await request.json();
         const { name, description, price, image, category, stock } = body;
@@ -46,6 +55,11 @@ export async function PUT(request, { params }) {
 
 export async function DELETE(request, { params }) {
     try {
+        const session = await getServerSession(authOptions);
+        if (!session || session.user.role !== "admin") {
+            return NextResponse.json({ error: "Not authorized" }, { status: 403 });
+        }
+
         const { id } = await params;
 
         await prisma.product.delete({

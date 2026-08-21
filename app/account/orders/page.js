@@ -18,7 +18,7 @@ export default async function OrderHistoryPage() {
 
     return (
         <main className="max-w-2xl mx-auto px-6 py-12">
-            <h1 className="text-2xl font-semibold mb-6">Your Orders</h1>
+            <h1 className="font-display text-3xl mb-6">Your Orders</h1>
 
             {orders.length === 0 ? (
                 <p className="text-neutral-500">
@@ -33,7 +33,7 @@ export default async function OrderHistoryPage() {
                         <Link
                             key={order.id}
                             href={`/account/orders/${order.id}`}
-                            className="flex justify-between items-center border border-neutral-200 rounded-lg px-4 py-3 hover:bg-neutral-50"
+                            className="flex justify-between items-center border border-line rounded-lg px-4 py-3 hover:bg-white transition-colors"
                         >
                             <div>
                                 <p className="text-sm font-medium">Order #{order.id}</p>
@@ -41,7 +41,7 @@ export default async function OrderHistoryPage() {
                                     {new Date(order.createdAt).toLocaleDateString()} — {order.status}
                                 </p>
                             </div>
-                            <p className="text-sm font-semibold">
+                            <p className="text-sm font-semibold text-forest">
                                 ${Number(order.total).toFixed(2)}
                             </p>
                         </Link>

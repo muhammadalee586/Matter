@@ -40,7 +40,7 @@ export default function LoginPage() {
 
     return (
         <main className="max-w-sm mx-auto px-6 py-16">
-            <h1 className="text-2xl font-semibold mb-6">Log in</h1>
+            <h1 className="font-display text-3xl mb-6">Log in</h1>
 
             <form onSubmit={handleSubmit} className="space-y-4">
                 <div>
@@ -51,7 +51,7 @@ export default function LoginPage() {
                         value={form.email}
                         onChange={handleChange}
                         required
-                        className="w-full border border-neutral-300 rounded-md px-3 py-2"
+                        className="w-full border border-line rounded-md px-3 py-2 bg-white focus:outline-none focus:ring-2 focus:ring-forest/30 focus:border-forest transition-colors"
                     />
                 </div>
 
@@ -63,7 +63,7 @@ export default function LoginPage() {
                         value={form.password}
                         onChange={handleChange}
                         required
-                        className="w-full border border-neutral-300 rounded-md px-3 py-2"
+                        className="w-full border border-line rounded-md px-3 py-2 bg-white focus:outline-none focus:ring-2 focus:ring-forest/30 focus:border-forest transition-colors"
                     />
                 </div>
 
@@ -72,7 +72,7 @@ export default function LoginPage() {
                 <button
                     type="submit"
                     disabled={loading}
-                    className="w-full bg-black text-white px-6 py-3 rounded-lg text-sm font-medium hover:bg-neutral-800 transition-colors disabled:opacity-50"
+                    className="w-full bg-forest text-white px-6 py-3 rounded-lg text-sm font-medium hover:bg-forest-light transition-colors disabled:opacity-50"
                 >
                     {loading ? "Logging in..." : "Log In"}
                 </button>
@@ -80,7 +80,7 @@ export default function LoginPage() {
 
             <p className="text-sm text-neutral-500 mt-4">
                 Don't have an account?{" "}
-                <Link href="/signup" className="underline">
+                <Link href="/login" className="underline text-forest">
                     Sign up
                 </Link>
             </p>

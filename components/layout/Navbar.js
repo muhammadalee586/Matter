@@ -9,10 +9,10 @@ export default function Navbar() {
     const { data: session, status } = useSession();
 
     return (
-        <header className="border-b border-neutral-200">
+        <header className="border-b border-line bg-stone">
             <nav className="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
-                <Link href="/" className="text-lg font-semibold tracking-tight">
-                    Matter
+                <Link href="/" className="font-display text-xl italic tracking-tight text-ink">
+                    Matter.
                 </Link>
 
                 <div className="flex items-center gap-6">
@@ -34,8 +34,8 @@ export default function Navbar() {
                         </Link>
                     )}
 
-                    <Link href="/cart" className="text-sm font-medium">
-                        Cart {cartCount > 0 && `(${cartCount})`}
+                    <Link href="/cart" className="text-sm font-medium text-ink hover:text-forest transition-colors">
+                        Cart {cartCount > 0 && <span className="text-forest">({cartCount})</span>}
                     </Link>
                 </div>
             </nav>

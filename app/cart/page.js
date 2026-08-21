@@ -9,7 +9,7 @@ export default function CartPage() {
     if (cart.length === 0) {
         return (
             <main className="max-w-2xl mx-auto px-6 py-12">
-                <h1 className="text-2xl font-semibold mb-4">Your Cart</h1>
+                <h1 className="font-display text-3xl mb-4">Your Cart</h1>
                 <p className="text-neutral-500">Your cart is empty.</p>
                 <Link href="/" className="text-sm underline mt-4 inline-block">
                     Continue shopping
@@ -20,13 +20,13 @@ export default function CartPage() {
 
     return (
         <main className="max-w-2xl mx-auto px-6 py-12">
-            <h1 className="text-2xl font-semibold mb-6">Your Cart</h1>
+            <h1 className="font-display text-3xl mb-6">Your Cart</h1>
 
             <div className="space-y-4">
                 {cart.map((item) => (
                     <div
                         key={item.id}
-                        className="flex items-center gap-4 border-b border-neutral-200 pb-4"
+                        className="flex items-center gap-4 border-b border-line pb-4"
                     >
                         <img
                             src={item.image}
@@ -46,7 +46,7 @@ export default function CartPage() {
                             onChange={(e) =>
                                 updateQuantity(item.id, Number(e.target.value))
                             }
-                            className="w-14 border border-neutral-300 rounded-md text-center py-1"
+                            className="w-14 border border-line rounded-md text-center py-1 focus:outline-none focus:ring-2 focus:ring-forest/30 focus:border-forest transition-colors"
                         />
                         <button
                             onClick={() => removeFromCart(item.id)}
@@ -59,12 +59,12 @@ export default function CartPage() {
             </div>
 
             <div className="mt-8 flex items-center justify-between">
-                <p className="text-lg font-semibold">
+                <p className="text-lg font-semibold text-forest">
                     Total: ${cartTotal.toFixed(2)}
                 </p>
                 <Link
                     href="/checkout"
-                    className="bg-black text-white px-6 py-3 rounded-lg text-sm font-medium hover:bg-neutral-800 transition-colors"
+                    className="bg-forest text-white px-6 py-3 rounded-lg text-sm font-medium hover:bg-forest-light transition-colors"
                 >
                     Checkout
                 </Link>

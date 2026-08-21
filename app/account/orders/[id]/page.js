@@ -27,7 +27,7 @@ export default async function OrderDetailPage({ params }) {
 
     return (
         <main className="max-w-2xl mx-auto px-6 py-12">
-            <h1 className="text-2xl font-semibold mb-2">Order Confirmed 🎉</h1>
+            <h1 className="font-display text-3xl mb-2">Order Confirmed 🎉</h1>
             <p className="text-sm text-neutral-500 mb-8">Order #{order.id}</p>
 
             <div className="space-y-3 mb-6">
@@ -41,9 +41,11 @@ export default async function OrderDetailPage({ params }) {
                 ))}
             </div>
 
-            <div className="flex justify-between items-center border-t border-neutral-200 pt-4 mb-8">
+            <div className="flex justify-between items-center border-t border-line pt-4 mb-8">
                 <span className="font-semibold">Total</span>
-                <span className="font-semibold">${Number(order.total).toFixed(2)}</span>
+                <span className="font-semibold text-forest">
+                    ${Number(order.total).toFixed(2)}
+                </span>
             </div>
 
             <Link href="/" className="text-sm underline">

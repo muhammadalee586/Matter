@@ -64,7 +64,7 @@ export default function NewProductPage() {
                         value={form.name}
                         onChange={handleChange}
                         required
-                        className="w-full border border-neutral-300 rounded-md px-3 py-2"
+                        className="w-full  border border-line rounded-md px-3 py-2 bg-white focus:outline-none focus:ring-2 focus:ring-forest/30 focus:border-forest transition-colors"
                     />
                 </div>
 
@@ -76,7 +76,7 @@ export default function NewProductPage() {
                         onChange={handleChange}
                         required
                         rows={3}
-                        className="w-full border border-neutral-300 rounded-md px-3 py-2"
+                        className="w-full  border border-line rounded-md px-3 py-2 bg-white focus:outline-none focus:ring-2 focus:ring-forest/30 focus:border-forest transition-colors"
                     />
                 </div>
 
@@ -90,7 +90,7 @@ export default function NewProductPage() {
                             value={form.price}
                             onChange={handleChange}
                             required
-                            className="w-full border border-neutral-300 rounded-md px-3 py-2"
+                            className="w-full  border border-line rounded-md px-3 py-2 bg-white focus:outline-none focus:ring-2 focus:ring-forest/30 focus:border-forest transition-colors"
                         />
                     </div>
                     <div>
@@ -101,7 +101,7 @@ export default function NewProductPage() {
                             value={form.stock}
                             onChange={handleChange}
                             required
-                            className="w-full border border-neutral-300 rounded-md px-3 py-2"
+                            className="w-full  border border-line rounded-md px-3 py-2 bg-white focus:outline-none focus:ring-2 focus:ring-forest/30 focus:border-forest transition-colors"
                         />
                     </div>
                 </div>
@@ -115,7 +115,7 @@ export default function NewProductPage() {
                         onChange={handleChange}
                         required
                         placeholder="https://..."
-                        className="w-full border border-neutral-300 rounded-md px-3 py-2"
+                        className="w-full  border border-line rounded-md px-3 py-2 bg-white focus:outline-none focus:ring-2 focus:ring-forest/30 focus:border-forest transition-colors"
                     />
                 </div>
 
@@ -127,7 +127,7 @@ export default function NewProductPage() {
                         value={form.category}
                         onChange={handleChange}
                         required
-                        className="w-full border border-neutral-300 rounded-md px-3 py-2"
+                        className="w-full  border border-line rounded-md px-3 py-2 bg-white focus:outline-none focus:ring-2 focus:ring-forest/30 focus:border-forest transition-colors"
                     />
                 </div>
 
@@ -136,7 +136,7 @@ export default function NewProductPage() {
                 <button
                     type="submit"
                     disabled={loading}
-                    className="bg-black text-white px-6 py-3 rounded-lg text-sm font-medium hover:bg-neutral-800 transition-colors disabled:opacity-50"
+                    className="bg-forest text-white px-6 py-3 rounded-lg text-sm font-medium hover:bg-forest-light transition-colors disabled:opacity-50"
                 >
                     {loading ? "Adding..." : "Add Product"}
                 </button>

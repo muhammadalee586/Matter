@@ -43,7 +43,7 @@ export default function PaymentForm({ onSuccess }) {
             <button
                 type="submit"
                 disabled={!stripe || loading}
-                className="w-full bg-black text-white px-6 py-3 rounded-lg text-sm font-medium hover:bg-neutral-800 transition-colors disabled:opacity-50"
+                className="w-full bg-forest text-white px-6 py-3 rounded-lg text-sm font-medium hover:bg-forest-light transition-colors disabled:opacity-50"
             >
                 {loading ? "Processing..." : "Pay Now"}
             </button>

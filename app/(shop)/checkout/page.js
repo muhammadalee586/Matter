@@ -94,7 +94,7 @@ export default function CheckoutPage() {
 
     return (
         <main className="max-w-lg mx-auto px-6 py-12">
-            <h1 className="text-2xl font-semibold mb-2">Checkout</h1>
+            <h1 className="font-display text-3xl mb-2">Checkout</h1>
             <p className="text-sm text-neutral-500 mb-8">
                 Step {step} of 2 — {step === 1 ? "Shipping info" : "Review order"}
             </p>
@@ -109,7 +109,7 @@ export default function CheckoutPage() {
                             value={shipping.fullName}
                             onChange={handleChange}
                             required
-                            className="w-full border border-neutral-300 rounded-md px-3 py-2"
+                            className="w-full  border border-line rounded-md px-3 py-2 bg-white focus:outline-none focus:ring-2 focus:ring-forest/30 focus:border-forest transition-colors"
                         />
                     </div>
 
@@ -121,7 +121,7 @@ export default function CheckoutPage() {
                             value={shipping.address}
                             onChange={handleChange}
                             required
-                            className="w-full border border-neutral-300 rounded-md px-3 py-2"
+                            className="w-full  border border-line rounded-md px-3 py-2 bg-white focus:outline-none focus:ring-2 focus:ring-forest/30 focus:border-forest transition-colors"
                         />
                     </div>
 
@@ -134,7 +134,7 @@ export default function CheckoutPage() {
                                 value={shipping.city}
                                 onChange={handleChange}
                                 required
-                                className="w-full border border-neutral-300 rounded-md px-3 py-2"
+                                className="w-full  border border-line rounded-md px-3 py-2 bg-white focus:outline-none focus:ring-2 focus:ring-forest/30 focus:border-forest transition-colors"
                             />
                         </div>
                         <div>
@@ -145,7 +145,7 @@ export default function CheckoutPage() {
                                 value={shipping.postalCode}
                                 onChange={handleChange}
                                 required
-                                className="w-full border border-neutral-300 rounded-md px-3 py-2"
+                                className="w-full  border border-line rounded-md px-3 py-2 bg-white focus:outline-none focus:ring-2 focus:ring-forest/30 focus:border-forest transition-colors"
                             />
                         </div>
                     </div>
@@ -158,13 +158,13 @@ export default function CheckoutPage() {
                             value={shipping.phone}
                             onChange={handleChange}
                             required
-                            className="w-full border border-neutral-300 rounded-md px-3 py-2"
+                            className="w-full  border border-line rounded-md px-3 py-2 bg-white focus:outline-none focus:ring-2 focus:ring-forest/30 focus:border-forest transition-colors"
                         />
                     </div>
 
                     <button
                         type="submit"
-                        className="w-full bg-black text-white px-6 py-3 rounded-lg text-sm font-medium hover:bg-neutral-800 transition-colors"
+                        className="w-full bg-forest text-white px-6 py-3 rounded-lg text-sm font-medium hover:bg-forest-light transition-colors"
                     >
                         Continue to Review
                     </button>
@@ -173,7 +173,7 @@ export default function CheckoutPage() {
 
             {step === 2 && (
                 <div>
-                    <div className="border border-neutral-200 rounded-lg p-4 mb-4">
+                    <div className="border border-line rounded-lg p-4 mb-4">
                         <h2 className="text-sm font-medium mb-2">Shipping to:</h2>
                         <p className="text-sm text-neutral-600">
                             {shipping.fullName}<br />
@@ -193,9 +193,9 @@ export default function CheckoutPage() {
                         ))}
                     </div>
 
-                    <div className="flex justify-between items-center border-t border-neutral-200 pt-4 mb-6">
+                    <div className="flex justify-between items-center border-t border-line pt-4 mb-6">
                         <span className="font-semibold">Total</span>
-                        <span className="font-semibold">${cartTotal.toFixed(2)}</span>
+                        <span className="font-semibold text-forest">${cartTotal.toFixed(2)}</span>
                     </div>
 
                     <div className="flex gap-3">
