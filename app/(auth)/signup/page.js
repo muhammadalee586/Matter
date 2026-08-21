@@ -46,7 +46,10 @@ export default function SignupPage() {
         <main className="max-w-sm mx-auto px-6 py-16">
             <h1 className="font-display text-3xl mb-6">Create an account</h1>
 
-            <form onSubmit={handleSubmit} className="space-y-4">
+            <form
+                onSubmit={handleSubmit}
+                className="space-y-4 bg-white border border-line rounded-xl p-6 md:p-8"
+            >
                 <div>
                     <label className="block text-sm font-medium mb-1">Name</label>
                     <input

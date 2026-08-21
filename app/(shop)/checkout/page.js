@@ -1,11 +1,10 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useCart } from "@/context/CartContext";
 import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
 import Link from "next/link";
-import { useEffect } from "react";
 import StripeWrapper from "@/components/checkout/StripeWrapper";
 import PaymentForm from "@/components/checkout/PaymentForm";
 import { useToast } from "@/context/ToastContext";
@@ -25,7 +24,6 @@ export default function CheckoutPage() {
         phone: "",
     });
     const [clientSecret, setClientSecret] = useState("");
-
 
     useEffect(() => {
         if (step === 2 && cartTotal > 0) {
@@ -95,14 +93,17 @@ export default function CheckoutPage() {
     }
 
     return (
-        <main className="max-w-lg mx-auto px-6 py-12">
+        <main className="max-w-lg mx-auto px-6 py-16">
             <h1 className="font-display text-3xl mb-2">Checkout</h1>
             <p className="text-sm text-neutral-500 mb-8">
                 Step {step} of 2 — {step === 1 ? "Shipping info" : "Review order"}
             </p>
 
             {step === 1 && (
-                <form onSubmit={handleContinue} className="space-y-4">
+                <form
+                    onSubmit={handleContinue}
+                    className="space-y-4 bg-white border border-line rounded-xl p-6 md:p-8"
+                >
                     <div>
                         <label className="block text-sm font-medium mb-1">Full Name</label>
                         <input
@@ -111,7 +112,7 @@ export default function CheckoutPage() {
                             value={shipping.fullName}
                             onChange={handleChange}
                             required
-                            className="w-full  border border-line rounded-md px-3 py-2 bg-white focus:outline-none focus:ring-2 focus:ring-forest/30 focus:border-forest transition-colors"
+                            className="w-full border border-line rounded-md px-3 py-2 bg-white focus:outline-none focus:ring-2 focus:ring-forest/30 focus:border-forest transition-colors"
                         />
                     </div>
 
@@ -123,7 +124,7 @@ export default function CheckoutPage() {
                             value={shipping.address}
                             onChange={handleChange}
                             required
-                            className="w-full  border border-line rounded-md px-3 py-2 bg-white focus:outline-none focus:ring-2 focus:ring-forest/30 focus:border-forest transition-colors"
+                            className="w-full border border-line rounded-md px-3 py-2 bg-white focus:outline-none focus:ring-2 focus:ring-forest/30 focus:border-forest transition-colors"
                         />
                     </div>
 
@@ -136,7 +137,7 @@ export default function CheckoutPage() {
                                 value={shipping.city}
                                 onChange={handleChange}
                                 required
-                                className="w-full  border border-line rounded-md px-3 py-2 bg-white focus:outline-none focus:ring-2 focus:ring-forest/30 focus:border-forest transition-colors"
+                                className="w-full border border-line rounded-md px-3 py-2 bg-white focus:outline-none focus:ring-2 focus:ring-forest/30 focus:border-forest transition-colors"
                             />
                         </div>
                         <div>
@@ -147,7 +148,7 @@ export default function CheckoutPage() {
                                 value={shipping.postalCode}
                                 onChange={handleChange}
                                 required
-                                className="w-full  border border-line rounded-md px-3 py-2 bg-white focus:outline-none focus:ring-2 focus:ring-forest/30 focus:border-forest transition-colors"
+                                className="w-full border border-line rounded-md px-3 py-2 bg-white focus:outline-none focus:ring-2 focus:ring-forest/30 focus:border-forest transition-colors"
                             />
                         </div>
                     </div>
@@ -160,7 +161,7 @@ export default function CheckoutPage() {
                             value={shipping.phone}
                             onChange={handleChange}
                             required
-                            className="w-full  border border-line rounded-md px-3 py-2 bg-white focus:outline-none focus:ring-2 focus:ring-forest/30 focus:border-forest transition-colors"
+                            className="w-full border border-line rounded-md px-3 py-2 bg-white focus:outline-none focus:ring-2 focus:ring-forest/30 focus:border-forest transition-colors"
                         />
                     </div>
 
@@ -174,12 +175,14 @@ export default function CheckoutPage() {
             )}
 
             {step === 2 && (
-                <div>
-                    <div className="border border-line rounded-lg p-4 mb-4">
+                <div className="bg-white border border-line rounded-xl p-6 md:p-8">
+                    <div className="border-b border-line pb-4 mb-4">
                         <h2 className="text-sm font-medium mb-2">Shipping to:</h2>
                         <p className="text-sm text-neutral-600">
-                            {shipping.fullName}<br />
-                            {shipping.address}, {shipping.city} {shipping.postalCode}<br />
+                            {shipping.fullName}
+                            <br />
+                            {shipping.address}, {shipping.city} {shipping.postalCode}
+                            <br />
                             {shipping.phone}
                         </p>
                     </div>
@@ -197,25 +200,25 @@ export default function CheckoutPage() {
 
                     <div className="flex justify-between items-center border-t border-line pt-4 mb-6">
                         <span className="font-semibold">Total</span>
-                        <span className="font-semibold text-forest">${cartTotal.toFixed(2)}</span>
+                        <span className="font-semibold text-forest">
+                            ${cartTotal.toFixed(2)}
+                        </span>
                     </div>
 
-                    <div className="flex gap-3">
-                        <button
-                            onClick={() => setStep(1)}
-                            className="text-sm text-neutral-500 underline mb-4"
-                        >
-                            ← Back to shipping
-                        </button>
+                    <button
+                        onClick={() => setStep(1)}
+                        className="text-sm text-neutral-500 underline mb-4"
+                    >
+                        ← Back to shipping
+                    </button>
 
-                        {clientSecret ? (
-                            <StripeWrapper clientSecret={clientSecret}>
-                                <PaymentForm onSuccess={handlePaymentSuccess} />
-                            </StripeWrapper>
-                        ) : (
-                            <p className="text-sm text-neutral-500">Loading payment form...</p>
-                        )}
-                    </div>
+                    {clientSecret ? (
+                        <StripeWrapper clientSecret={clientSecret}>
+                            <PaymentForm onSuccess={handlePaymentSuccess} />
+                        </StripeWrapper>
+                    ) : (
+                        <p className="text-sm text-neutral-500">Loading payment form...</p>
+                    )}
                 </div>
             )}
         </main>

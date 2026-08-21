@@ -42,7 +42,10 @@ export default function LoginPage() {
         <main className="max-w-sm mx-auto px-6 py-16">
             <h1 className="font-display text-3xl mb-6">Log in</h1>
 
-            <form onSubmit={handleSubmit} className="space-y-4">
+            <form
+                onSubmit={handleSubmit}
+                className="space-y-4 bg-white border border-line rounded-xl p-6 md:p-8"
+            >
                 <div>
                     <label className="block text-sm font-medium mb-1">Email</label>
                     <input
@@ -80,7 +83,7 @@ export default function LoginPage() {
 
             <p className="text-sm text-neutral-500 mt-4">
                 Don't have an account?{" "}
-                <Link href="/login" className="underline text-forest">
+                <Link href="/signup" className="underline text-forest">
                     Sign up
                 </Link>
             </p>

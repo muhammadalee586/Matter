@@ -73,7 +73,9 @@ export default async function HomePage({ searchParams }) {
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                   />
                 </div>
-                <h2 className="text-sm font-medium">{product.name}</h2>
+                <h2 className="text-sm font-medium line-clamp-1 min-h-[1.25rem]">
+                  {product.name}
+                </h2>
                 <p className="text-sm text-forest font-medium mb-3">
                   ${Number(product.price).toFixed(2)}
                 </p>
