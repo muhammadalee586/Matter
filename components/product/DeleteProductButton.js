@@ -6,7 +6,7 @@ import { useToast } from "@/context/ToastContext";
 import { Trash2 } from "lucide-react";
 import ConfirmDialog from "@/components/ui/ConfirmDialog";
 
-export default function DeleteProductButton({ productId }) {
+export default function DeleteProductButton({ productId, iconOnly = false }) {
     const router = useRouter();
     const { showToast } = useToast();
     const [loading, setLoading] = useState(false);
@@ -26,7 +26,7 @@ export default function DeleteProductButton({ productId }) {
             }
 
             showToast("Product deleted");
-            router.push("/");
+            router.push(iconOnly ? "/admin/products" : "/");
             router.refresh();
         } catch (err) {
             showToast(err.message, "error");
@@ -39,10 +39,15 @@ export default function DeleteProductButton({ productId }) {
             <button
                 onClick={() => setShowConfirm(true)}
                 disabled={loading}
-                className="flex items-center gap-1.5 text-sm text-red-500 hover:text-red-700 disabled:opacity-50 transition-colors"
+                className={
+                    iconOnly
+                        ? "text-neutral-400 hover:text-red-500 disabled:opacity-50 transition-colors"
+                        : "flex items-center gap-1.5 text-sm text-red-500 hover:text-red-700 disabled:opacity-50 transition-colors"
+                }
+                aria-label={iconOnly ? "Delete product" : undefined}
             >
-                <Trash2 size={16} />
-                {loading ? "Deleting..." : "Delete Product"}
+                <Trash2 size={iconOnly ? 16 : 16} />
+                {!iconOnly && (loading ? "Deleting..." : "Delete Product")}
             </button>
 
             <ConfirmDialog
