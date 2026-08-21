@@ -3,6 +3,7 @@ import "./globals.css";
 import { CartProvider } from "@/context/CartContext";
 import SessionWrapper from "@/components/layout/SessionWrapper";
 import Navbar from "@/components/layout/Navbar";
+import { ToastProvider } from "@/context/ToastContext";
 
 const fraunces = Fraunces({
   variable: "--font-display",
@@ -28,10 +29,12 @@ export default function RootLayout({ children }) {
     >
       <body className="min-h-full flex flex-col font-body bg-stone text-ink">
         <SessionWrapper>
-          <CartProvider>
-            <Navbar />
-            {children}
-          </CartProvider>
+          <ToastProvider>
+            <CartProvider>
+              <Navbar />
+              {children}
+            </CartProvider>
+          </ToastProvider>
         </SessionWrapper>
       </body>
     </html>

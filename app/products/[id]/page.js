@@ -5,6 +5,7 @@ import AddToCartButton from "@/components/product/AddToCartButton";
 import DeleteProductButton from "@/components/product/DeleteProductButton";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
+import { Pencil } from "lucide-react";
 
 export default async function ProductDetailPage({ params }) {
     const { id } = await params;
@@ -51,8 +52,9 @@ export default async function ProductDetailPage({ params }) {
                     <div className="flex items-center gap-4 mt-6 pt-6 border-t border-line">
                         <Link
                             href={`/admin/products/${product.id}/edit`}
-                            className="text-sm text-neutral-500 hover:text-ink underline"
+                            className="flex items-center gap-1.5 text-sm text-neutral-500 hover:text-ink underline"
                         >
+                            <Pencil size={16} />
                             Edit Product
                         </Link>
                         <DeleteProductButton productId={product.id} />

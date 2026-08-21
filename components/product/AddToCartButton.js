@@ -1,16 +1,15 @@
 "use client";
 
 import { useCart } from "@/context/CartContext";
-import { useState } from "react";
+import { useToast } from "@/context/ToastContext";
 
 export default function AddToCartButton({ product, compact = false }) {
     const { addToCart } = useCart();
-    const [added, setAdded] = useState(false);
+    const { showToast } = useToast();
 
     function handleClick() {
         addToCart(product);
-        setAdded(true);
-        setTimeout(() => setAdded(false), 1500);
+        showToast(`${product.name} added to cart`);
     }
 
     return (
@@ -22,7 +21,7 @@ export default function AddToCartButton({ product, compact = false }) {
                     : "bg-forest text-white px-6 py-3 rounded-lg text-sm font-medium hover:bg-forest-light transition-colors"
             }
         >
-            {added ? "Added ✓" : "Add to Cart"}
+            Add to Cart
         </button>
     );
 }

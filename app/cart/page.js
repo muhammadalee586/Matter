@@ -2,16 +2,22 @@
 
 import { useCart } from "@/context/CartContext";
 import Link from "next/link";
+import { ShoppingBag } from "lucide-react";
+import { Trash2 } from "lucide-react";
 
 export default function CartPage() {
     const { cart, removeFromCart, updateQuantity, cartTotal } = useCart();
 
     if (cart.length === 0) {
         return (
-            <main className="max-w-2xl mx-auto px-6 py-12">
-                <h1 className="font-display text-3xl mb-4">Your Cart</h1>
-                <p className="text-neutral-500">Your cart is empty.</p>
-                <Link href="/" className="text-sm underline mt-4 inline-block">
+            <main className="max-w-2xl mx-auto px-6 py-20 text-center">
+                <ShoppingBag size={40} className="mx-auto mb-4 text-neutral-300" />
+                <h1 className="font-display text-3xl mb-2">Your Cart</h1>
+                <p className="text-neutral-500 mb-4">Your cart is empty.</p>
+                <Link
+                    href="/"
+                    className="text-sm text-forest underline underline-offset-4"
+                >
                     Continue shopping
                 </Link>
             </main>
@@ -50,9 +56,10 @@ export default function CartPage() {
                         />
                         <button
                             onClick={() => removeFromCart(item.id)}
-                            className="text-sm text-neutral-400 hover:text-red-500"
+                            className="text-neutral-400 hover:text-red-500 transition-colors"
+                            aria-label="Remove item"
                         >
-                            Remove
+                            <Trash2 size={18} />
                         </button>
                     </div>
                 ))}

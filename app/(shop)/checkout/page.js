@@ -8,8 +8,10 @@ import Link from "next/link";
 import { useEffect } from "react";
 import StripeWrapper from "@/components/checkout/StripeWrapper";
 import PaymentForm from "@/components/checkout/PaymentForm";
+import { useToast } from "@/context/ToastContext";
 
 export default function CheckoutPage() {
+    const { showToast } = useToast();
     const { cart, cartTotal, clearCart } = useCart();
     const { data: session, status } = useSession();
     const router = useRouter();
@@ -51,7 +53,7 @@ export default function CheckoutPage() {
             clearCart();
             router.push(`/account/orders/${order.id}`);
         } catch (err) {
-            alert(err.message);
+            showToast(err.message, "error");
         }
     }
 

@@ -39,7 +39,8 @@ export default function NewProductPage() {
             });
 
             if (!res.ok) {
-                throw new Error("Failed to create product");
+                const data = await res.json();
+                throw new Error(data.error || "Failed to create product");
             }
 
             router.push("/");

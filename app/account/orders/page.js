@@ -3,6 +3,7 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 import { redirect } from "next/navigation";
 import Link from "next/link";
+import { PackageOpen } from "lucide-react";
 
 export default async function OrderHistoryPage() {
     const session = await getServerSession(authOptions);
@@ -21,12 +22,13 @@ export default async function OrderHistoryPage() {
             <h1 className="font-display text-3xl mb-6">Your Orders</h1>
 
             {orders.length === 0 ? (
-                <p className="text-neutral-500">
-                    No orders yet.{" "}
-                    <Link href="/" className="underline">
+                <div className="text-center py-16">
+                    <PackageOpen size={40} className="mx-auto mb-4 text-neutral-300" />
+                    <p className="text-neutral-500 mb-2">No orders yet.</p>
+                    <Link href="/" className="text-sm text-forest underline underline-offset-4">
                         Go shopping
                     </Link>
-                </p>
+                </div>
             ) : (
                 <div className="space-y-3">
                     {orders.map((order) => (

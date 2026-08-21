@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useCart } from "@/context/CartContext";
 import { useSession, signOut } from "next-auth/react";
+import { ShoppingBag } from "lucide-react";
 
 export default function Navbar() {
     const { cartCount } = useCart();
@@ -45,9 +46,10 @@ export default function Navbar() {
 
                     <Link
                         href="/cart"
-                        className="text-sm font-medium text-ink hover:text-forest transition-colors"
+                        className="flex items-center gap-1.5 text-sm font-medium text-ink hover:text-forest transition-colors"
                     >
-                        Cart {cartCount > 0 && <span className="text-forest">({cartCount})</span>}
+                        <ShoppingBag size={18} />
+                        {cartCount > 0 && <span className="text-forest">{cartCount}</span>}
                     </Link>
                 </div>
             </nav>

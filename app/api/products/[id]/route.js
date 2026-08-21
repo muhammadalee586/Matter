@@ -3,8 +3,6 @@ import prisma from "@/lib/db";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 
-
-
 export async function GET(request, { params }) {
     try {
         const { id } = await params;
@@ -69,6 +67,12 @@ export async function DELETE(request, { params }) {
         return NextResponse.json({ message: "Product deleted" });
     } catch (error) {
         console.error(error);
+        if (error.code === "P2003") {
+            return NextResponse.json(
+                { error: "Can't delete this product — it has existing orders." },
+                { status: 400 }
+            );
+        }
         return NextResponse.json(
             { error: "Failed to delete product" },
             { status: 500 }
