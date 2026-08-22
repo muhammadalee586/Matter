@@ -6,12 +6,14 @@ import DeleteProductButton from "@/components/product/DeleteProductButton";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 import { Pencil } from "lucide-react";
+import ProductGallery from "@/components/product/ProductGallery";
 
 export default async function ProductDetailPage({ params }) {
     const { id } = await params;
 
     const product = await prisma.product.findUnique({
         where: { id: Number(id) },
+        include: { images: true },
     });
 
     if (!product) {
@@ -28,13 +30,11 @@ export default async function ProductDetailPage({ params }) {
 
     return (
         <main className="max-w-4xl mx-auto px-6 py-16 md:py-20 grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-16">
-            <div className="aspect-square bg-white border border-line rounded-xl overflow-hidden">
-                <img
-                    src={product.image}
-                    alt={product.name}
-                    className="w-full h-full object-cover"
-                />
-            </div>
+            <ProductGallery
+                mainImage={product.image}
+                images={product.images}
+                name={product.name}
+            />
 
             <div>
                 <h1 className="font-display text-3xl mb-2">{product.name}</h1>

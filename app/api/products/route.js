@@ -26,10 +26,20 @@ export async function POST(request) {
         }
 
         const body = await request.json();
-        const { name, description, price, image, category, stock } = body;
+        const { name, description, price, image, category, stock, images } = body;
 
         const product = await prisma.product.create({
-            data: { name, description, price, image, category, stock },
+            data: {
+                name,
+                description,
+                price,
+                image,
+                category,
+                stock,
+                images: {
+                    create: (images || []).filter(Boolean).map((url) => ({ url })),
+                }
+            },
         });
 
         return NextResponse.json(product, { status: 201 });
