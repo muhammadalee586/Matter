@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { useRouter, useParams } from "next/navigation";
+import ImageUpload from "@/components/admin/ImageUpload";
 
 export default function EditProductPage() {
     const router = useRouter();
@@ -16,6 +17,7 @@ export default function EditProductPage() {
         category: "",
         stock: "",
     });
+    const [images, setImages] = useState([""]);
     const [loading, setLoading] = useState(false);
     const [fetching, setFetching] = useState(true);
     const [error, setError] = useState("");
@@ -34,6 +36,8 @@ export default function EditProductPage() {
                     category: data.category,
                     stock: data.stock,
                 });
+                const existingImages = data.images?.map((img) => img.url) || [];
+                setImages(existingImages.length > 0 ? existingImages : [""]);
             } catch (err) {
                 setError(err.message);
             } finally {
@@ -46,6 +50,18 @@ export default function EditProductPage() {
     function handleChange(e) {
         const { name, value } = e.target;
         setForm((prev) => ({ ...prev, [name]: value }));
+    }
+
+    function handleImageChange(index, value) {
+        setImages((prev) => prev.map((img, i) => (i === index ? value : img)));
+    }
+
+    function addImageField() {
+        setImages((prev) => [...prev, ""]);
+    }
+
+    function removeImageField(index) {
+        setImages((prev) => prev.filter((_, i) => i !== index));
     }
 
     async function handleSubmit(e) {
@@ -61,6 +77,7 @@ export default function EditProductPage() {
                     ...form,
                     price: Number(form.price),
                     stock: Number(form.stock),
+                    images: images.filter((url) => url.trim() !== ""),
                 }),
             });
 
@@ -95,7 +112,7 @@ export default function EditProductPage() {
                         value={form.name}
                         onChange={handleChange}
                         required
-                        className="w-full  border border-line rounded-md px-3 py-2 bg-white focus:outline-none focus:ring-2 focus:ring-forest/30 focus:border-forest transition-colors"
+                        className="w-full border border-line rounded-md px-3 py-2 bg-white focus:outline-none focus:ring-2 focus:ring-forest/30 focus:border-forest transition-colors"
                     />
                 </div>
 
@@ -107,7 +124,7 @@ export default function EditProductPage() {
                         onChange={handleChange}
                         required
                         rows={3}
-                        className="w-full  border border-line rounded-md px-3 py-2 bg-white focus:outline-none focus:ring-2 focus:ring-forest/30 focus:border-forest transition-colors"
+                        className="w-full border border-line rounded-md px-3 py-2 bg-white focus:outline-none focus:ring-2 focus:ring-forest/30 focus:border-forest transition-colors"
                     />
                 </div>
 
@@ -121,7 +138,7 @@ export default function EditProductPage() {
                             value={form.price}
                             onChange={handleChange}
                             required
-                            className="w-full  border border-line rounded-md px-3 py-2 bg-white focus:outline-none focus:ring-2 focus:ring-forest/30 focus:border-forest transition-colors"
+                            className="w-full border border-line rounded-md px-3 py-2 bg-white focus:outline-none focus:ring-2 focus:ring-forest/30 focus:border-forest transition-colors"
                         />
                     </div>
                     <div>
@@ -132,21 +149,48 @@ export default function EditProductPage() {
                             value={form.stock}
                             onChange={handleChange}
                             required
-                            className="w-full  border border-line rounded-md px-3 py-2 bg-white focus:outline-none focus:ring-2 focus:ring-forest/30 focus:border-forest transition-colors"
+                            className="w-full border border-line rounded-md px-3 py-2 bg-white focus:outline-none focus:ring-2 focus:ring-forest/30 focus:border-forest transition-colors"
                         />
                     </div>
                 </div>
+                <div>
+                    <label className="block text-sm font-medium mb-1">Main Image</label>
+                    <ImageUpload
+                        value={form.image}
+                        onChange={(url) => setForm((prev) => ({ ...prev, image: url }))}
+                    />
+                </div>
 
                 <div>
-                    <label className="block text-sm font-medium mb-1">Image URL</label>
-                    <input
-                        type="text"
-                        name="image"
-                        value={form.image}
-                        onChange={handleChange}
-                        required
-                        className="w-full  border border-line rounded-md px-3 py-2 bg-white focus:outline-none focus:ring-2 focus:ring-forest/30 focus:border-forest transition-colors"
-                    />
+                    <label className="block text-sm font-medium mb-1">
+                        Additional Images (optional)
+                    </label>
+                    <div className="flex flex-wrap gap-3">
+                        {images.map((url, index) => (
+                            <div key={index} className="relative">
+                                <ImageUpload
+                                    value={url}
+                                    onChange={(newUrl) => handleImageChange(index, newUrl)}
+                                />
+                                {images.length > 1 && !url && (
+                                    <button
+                                        type="button"
+                                        onClick={() => removeImageField(index)}
+                                        className="absolute -top-2 -right-2 bg-white border border-line rounded-full p-1 text-xs hover:bg-red-50 hover:text-red-500 transition-colors"
+                                    >
+                                        ✕
+                                    </button>
+                                )}
+                            </div>
+                        ))}
+                    </div>
+                    <button
+                        type="button"
+                        onClick={addImageField}
+                        className="text-sm text-forest underline mt-3"
+                    >
+                        + Add another image
+                    </button>
                 </div>
 
                 <div>
@@ -157,7 +201,7 @@ export default function EditProductPage() {
                         value={form.category}
                         onChange={handleChange}
                         required
-                        className="w-full  border border-line rounded-md px-3 py-2 bg-white focus:outline-none focus:ring-2 focus:ring-forest/30 focus:border-forest transition-colors"
+                        className="w-full border border-line rounded-md px-3 py-2 bg-white focus:outline-none focus:ring-2 focus:ring-forest/30 focus:border-forest transition-colors"
                     />
                 </div>
 

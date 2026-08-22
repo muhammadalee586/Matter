@@ -9,6 +9,7 @@ export async function GET(request, { params }) {
 
         const product = await prisma.product.findUnique({
             where: { id: Number(id) },
+            include: { images: true },
         });
 
         if (!product) {
@@ -34,11 +35,26 @@ export async function PUT(request, { params }) {
 
         const { id } = await params;
         const body = await request.json();
-        const { name, description, price, image, category, stock } = body;
+        const { name, description, price, image, category, stock, images } = body;
+
+        await prisma.productImage.deleteMany({
+            where: { productId: Number(id) },
+        });
 
         const product = await prisma.product.update({
             where: { id: Number(id) },
-            data: { name, description, price, image, category, stock },
+            data: {
+                name,
+                description,
+                price,
+                image,
+                category,
+                stock,
+                images: {
+                    create: (images || []).filter(Boolean).map((url) => ({ url })),
+                },
+            },
+            include: { images: true },
         });
 
         return NextResponse.json(product);
