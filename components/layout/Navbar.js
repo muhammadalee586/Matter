@@ -22,6 +22,14 @@ export default function Navbar() {
                             <span className="text-sm text-neutral-500 hidden sm:inline">
                                 Hi, {session.user.name}
                             </span>
+                            {session.user.role === "admin" && (
+                                <Link
+                                    href="/admin"
+                                    className="text-sm font-medium text-ink hover:text-forest transition-colors"
+                                >
+                                    Admin
+                                </Link>
+                            )}
                             <Link
                                 href="/account/orders"
                                 className="text-sm font-medium text-ink hover:text-forest transition-colors"
